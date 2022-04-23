@@ -5,33 +5,18 @@ from django.contrib.auth.models import User
 
 from .models import Executor, Ad
 
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
 
-        widgets = {
-            'username': TextInput(attrs={
-                'class': 'form-control mb-3',
-                'style': 'height: 40px',
-                'placeholder': 'Имя пользователя',
-            }),
-            'password1': PasswordInput(attrs={
-                'class': 'form-control mb-3',
-                'style': 'height: 40px',
-                'placeholder': 'Пароль',
-            }),
-            'password2': PasswordInput(attrs={
-                'class': 'form-control mb-3',
-                'style': 'height: 40px',
-                'placeholder': 'Повтор пароля',
-            })}
-
 
 class AddAdForm(ModelForm):
     class Meta:
         model = Ad
-        fields = ['title', 'area', 'budget', 'deadline', 'address_index', 'address_region', 'address_city', 'address_street', 'address_office', 'contact']
+        fields = ['title', 'area', 'budget', 'deadline', 'address_index', 'address_region', 'address_city',
+                  'address_street', 'address_office', 'contact']
 
         widgets = {
             'title': TextInput(attrs={
@@ -86,3 +71,31 @@ class AddAdForm(ModelForm):
             }),
         }
 
+
+class AddExecutorForm(ModelForm):
+    class Meta:
+        model = Executor
+        fields = ['title', 'price', 'contact', 'additionalinfo']
+
+        widgets = {
+            'title': TextInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Наименование организации (ООО, ОАО, ИП, ...)',
+            }),
+            'price': NumberInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Средняя стоимость работ за один кв. м.',
+            }),
+            'contact': TextInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Контактная информация',
+            }),
+            'additionalinfo': TextInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Дополнительная информация',
+            }),
+        }
