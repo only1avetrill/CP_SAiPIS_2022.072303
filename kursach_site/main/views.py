@@ -3,7 +3,7 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from django.urls import reverse_lazy
-from datetime import timedelta
+
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
@@ -29,8 +29,8 @@ def sortAds(request, sort_slug):
 
 @login_required
 def sortExecutors(request, sort_slug):
-    ads = Executor.objects.order_by(sort_slug)
-    return render(request, 'executors.html', {'ads': ads})
+    executors = Executor.objects.order_by(sort_slug)
+    return render(request, 'executors.html', {'executors': executors})
 
 @login_required
 def AddSuccess(request):

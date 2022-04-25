@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('ad/sort/<slug:sort_slug>', views.sortAds, name='sortAds'),
+    path('executor/sort/<slug:sort_slug>', views.sortExecutors, name='sortExecutors'),
     path('about', views.AboutPage, name='about'),
     path('main', views.MainPage, name='main'),
     path('register', views.RegisterUser, name='register'),

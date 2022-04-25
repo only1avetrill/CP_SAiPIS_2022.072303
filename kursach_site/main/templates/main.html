@@ -1,93 +1,34 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Главная</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
-            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
-            crossorigin="anonymous"></script>
-</head>
-
-<body>
-<main>
-    <header class="p-3 bg-dark text-white sticky-top">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href='{% url 'main' %}' class="nav-link px-2 text-white">Главная</a></li>
-                    <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Исполнители</a></li>
-                    <li><a href='{% url 'profile' %}' class="nav-link px-2 text-secondary">Профиль</a></li>
-
-                </ul>
-                <div class="text-end">
-                    <span class="px-2 text-secondary">Здравствуйте, <strong>{{ user.username }}</strong>!</span>
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false"> Действия
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{% url 'addexec' %}">Добавить исполнителя</a></li>
-                        <li><a class="dropdown-item" href="{% url 'addad' %}">Добавить объявление</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Выход</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="px-4 pt-5 my-1 text-center border-bottom">
-        <h1 class="display-5 fw-bold">Объявления</h1>
-        <div class="col-lg-12 mx-auto">
-            <p class="lead mb-4">Если Вы представитель детского сада (заказчик), то Вы можете подать объявление о поиске
-                подрядчика, а также выбрать его по необходимым критериям из списка. Если Вы представитель организации по
-                озеленению (подрядчик), то Вы можете найти подходящий заказ, а также изучить предложения конкурентов.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-4"><a class="btn btn-dark btn-lg px-4"
-                                                                                  href="{% url 'executors' %}">Выбор
-                подрядчика</a></div>
-        </div>
-        <div class="overflow-hidden" style="max-height: 30vh;">
-            <div class="container px-5"><img
-                    src="https://user-images.githubusercontent.com/75385700/164297220-fb66f069-64c4-436c-b553-bd96f8e75317.png"
-                    class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500"
-                    loading="lazy"></div>
-        </div>
-    </div>
-    <div class="px-4 pt-5 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'area' %}">По площади
-        работы ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'deadline' %}">По сроку сдачи ↑</a>
-        <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'budget' %}">По бюджету ↑</a> <a
-                class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'main' %}">Стандартный порядок (по времени
+{% extends 'BASE.html' %} {% block title %}Главная{% endblock %} {% block mainbuttons %}
+<li><a href='{% url 'main' %}' class="nav-link px-2 text-white">Главная</a></li>
+<li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
+<li><a href='{% url 'profile' %}' class="nav-link px-2 text-secondary">Профиль</a></li> {% endblock %} {% block main %}
+<div class="px-4 pt-5 my-1 text-center border-bottom">
+	<h1 class="display-5 fw-bold">Объявления</h1>
+	<div class="col-lg-12 mx-auto">
+		<p class="lead mb-4">Если Вы представитель детского сада (заказчик), то Вы можете <a href="{% url 'addad' %}">подать объявление о поиске подрядчика</a>, а также <a href="{% url 'executors' %}">выбрать его по необходимым критериям</a> из списка. Если Вы представитель организации по озеленению (подрядчик), то Вы можете найти подходящий заказ, а также <a href="{% url 'executors' %}">изучить
+                    предложения конкурентов</a>.</p>
+	</div>
+	<div class="overflow-hidden" style="max-height: 30vh;">
+		<div class="container px-5"><img src="https://user-images.githubusercontent.com/75385700/164297220-fb66f069-64c4-436c-b553-bd96f8e75317.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy"></div>
+	</div>
+</div>
+<div class="px-4 pt-5 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'area' %}">По площади
+        работы ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'deadline' %}">По сроку сдачи
+        ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'budget' %}">По бюджету ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'main' %}">Стандартный порядок (по времени
             добавления ↓)</a></div>
-    <div class="px-4 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-area' %}">По площади работы
-        ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-deadline' %}">По сроку сдачи ↓</a> <a
-            class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-budget' %}">По бюджету ↓</a></div>
-    <div class="px-4 pt-2 my-1"> {% if ads %} {% for el in ads %}
-        <div class="alert alert-secondary">
-            <h3><b>Детский сад «{{ el.title }}»</b></h3>
-            <h6><b>Площадь заказа:</b> {{ el.area }} кв. м.</h6>
-            <h6><b>Адрес заказа:</b> {{ el.address_index }}, {{ el.address_region }}
+<div class="px-4 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-area' %}">По площади
+        работы
+        ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-deadline' %}">По сроку сдачи ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-budget' %}">По бюджету ↓</a></div>
+<div class="px-4 pt-2 my-1"> {% if ads %} {% for el in ads %}
+	<div class="alert alert-secondary">
+		<h3><b>Детский сад «{{ el.title }}»</b></h3>
+		<h6><b>Площадь заказа:</b> {{ el.area }} кв. м.</h6>
+		<h6><b>Адрес заказа:</b> {{ el.address_index }}, {{ el.address_region }}
                 обл., {{ el.address_city }}, {{ el.address_street }}, {{ el.address_office }}</h6>
-            <h6><b>Бюджет:</b> {{ el.budget }} руб.</h6>
-            <h6><b>Срок сдачи:</b> {{ el.deadline }}</h6>
-            <h6><b>Контактная информация:</b> {{ el.contact }}</h6></div> {% endfor %} {% else %}
-        <div class="alert alert-danger text-center">
-            <h3><b>Объявлений нет!</b></h3>
-            <h10>Добавьте новое либо повторите попытку позже.</h10>
-        </div> {% endif %} </div>
-
-    <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3"></ul>
-            <p class="text-center text-muted">© 2022 Rocknox Interactive | Пользователей в сети:  | <a href='{% url 'about' %}'>О сайте / Связь
-                с
-                нами</a>
-
-                {% if user.is_superuser %} | <a href='./admin'>Панель управления</a>{% endif %}</footer>
-    </div>
-</main>
-</body>
-
-</html>
+		<h6><b>Бюджет:</b> {{ el.budget }} руб.</h6>
+		<h6><b>Срок сдачи:</b> {{ el.deadline }}</h6>
+		<h6><b>Контактная информация:</b> {{ el.contact }}</h6></div> {% endfor %} {% else %}
+	<div class="alert alert-danger text-center">
+		<h3><b>Объявлений нет!</b></h3>
+		<h10>Добавьте новое либо повторите попытку позже.</h10>
+	</div> {% endif %} </div> {% endblock %}

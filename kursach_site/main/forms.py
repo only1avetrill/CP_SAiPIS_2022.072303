@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, DateInput, NumberInput, PasswordInput
+from django.forms import ModelForm, TextInput, DateInput, NumberInput, PasswordInput, TimeInput, Select
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
@@ -75,7 +75,7 @@ class AddAdForm(ModelForm):
 class AddExecutorForm(ModelForm):
     class Meta:
         model = Executor
-        fields = ['title', 'price', 'contact', 'additionalinfo']
+        fields = ['title', 'price', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends']
 
         widgets = {
             'title': TextInput(attrs={
@@ -97,5 +97,20 @@ class AddExecutorForm(ModelForm):
                 'class': 'form-control',
                 'style': 'height: 40px',
                 'placeholder': 'Дополнительная информация',
+            }),
+            'worktime_start': TimeInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Начало рабочего дня в формате ЧЧ:ММ',
+            }),
+            'worktime_end': TimeInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Окончание рабочего дня в формате ЧЧ:ММ',
+            }),
+            'weekends': Select(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Выходные',
             }),
         }

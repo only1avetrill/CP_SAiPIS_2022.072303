@@ -1,10 +1,16 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.conf import settings
 
+from requests import request
 
-# Create your models here.
 
 class Executor(models.Model):
+    weekends = (
+        ('без выходных', 'без выходных'),
+        ('с выходными, требуется уточнение', 'с выходными, требуется уточнение')
+    )
+
     class Meta:
         verbose_name = 'Исполнитель'
         verbose_name_plural = 'Исполнители'
@@ -12,7 +18,10 @@ class Executor(models.Model):
     title = models.CharField(max_length=50, verbose_name='Название')
     price = models.IntegerField(verbose_name='Стоимость услуг', validators=[MinValueValidator(0)])
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
-    additionalinfo = models.CharField(max_length=500, verbose_name='Дополнительная информация')
+    worktime_start = models.TimeField(verbose_name='[Время работы] Начало')
+    worktime_end = models.TimeField(verbose_name='[Время работы] Окончание')
+    additionalinfo = models.CharField(max_length=500, verbose_name='Дополнительная информация', blank=True, null=True)
+    weekends = models.CharField(max_length=50, choices=weekends)
 
 
 class Ad(models.Model):
