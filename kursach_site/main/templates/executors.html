@@ -22,8 +22,17 @@
 		<h6><b>Время работы:</b> {{ el.worktime_start }} - {{ el.worktime_end }} ({{ el.weekends }})</h6>
 		<br>
 		<h6><b>Дополнительная информация:</b> {{ el.additionalinfo }}</h6>
-		<h1>{{ el.author }}</h1> </div> {% endfor %} {% else %}
-	<div class="alert alert-danger text-center">
+		<h1>{{ el.author }}</h1>
+    {% if user.is_superuser %}
+        <div align="right">
+    <a href="/editexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
+<a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
+</div>
+        </div>
+
+    {% endif %}
+{% endfor %} {% else %}
+    <div class="alert alert-danger text-center">
 		<h3><b>Подрядчиков нет!</b></h3>
 		<h10>Добавьте нового либо повторите попытку позже.</h10>
 	</div> {% endif %} </div> {% endblock %}

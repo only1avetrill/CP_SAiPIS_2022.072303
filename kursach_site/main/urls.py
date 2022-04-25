@@ -17,6 +17,12 @@ urlpatterns = [
     path('add_success', views.AddSuccess, name='addsuccess'),
     path('', views.LoginUser.as_view(), name="auth"),
 
+    path('deleteexecutor/<int:id>', views.DeleteExecutor),
+    path('editexecutor/<int:id>', views.EditExecutor),
+
+    path('deletead/<int:id>', views.DeleteAd),
+    path('editad/<int:id>', views.EditAd),
+
 
     path('loginrequired', views.LoginRequired, name="loginrequired"),
 

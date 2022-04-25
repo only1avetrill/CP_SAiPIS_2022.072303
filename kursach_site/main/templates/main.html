@@ -14,8 +14,7 @@
 </div>
 <div class="px-4 pt-5 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'area' %}">По площади
         работы ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'deadline' %}">По сроку сдачи
-        ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'budget' %}">По бюджету ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'main' %}">Стандартный порядок (по времени
-            добавления ↓)</a></div>
+        ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'budget' %}">По бюджету ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'main' %}">Стандартный порядок</a></div>
 <div class="px-4 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-area' %}">По площади
         работы
         ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-deadline' %}">По сроку сдачи ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-budget' %}">По бюджету ↓</a></div>
@@ -27,8 +26,19 @@
                 обл., {{ el.address_city }}, {{ el.address_street }}, {{ el.address_office }}</h6>
 		<h6><b>Бюджет:</b> {{ el.budget }} руб.</h6>
 		<h6><b>Срок сдачи:</b> {{ el.deadline }}</h6>
-		<h6><b>Контактная информация:</b> {{ el.contact }}</h6></div> {% endfor %} {% else %}
-	<div class="alert alert-danger text-center">
+		<h6><b>Контактная информация:</b> {{ el.contact }}</h6>
+    {% if user.is_superuser %}
+        <div align="right">
+    <a href="/editad/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
+<a href="/deletead/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
+</div>
+        </div>
+
+    {% endif %}
+
+
+{% endfor %} {% else %}
+	    <div class="alert alert-danger text-center">
 		<h3><b>Объявлений нет!</b></h3>
 		<h10>Добавьте новое либо повторите попытку позже.</h10>
 	</div> {% endif %} </div> {% endblock %}
