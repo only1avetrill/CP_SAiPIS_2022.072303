@@ -20,9 +20,13 @@
 					<br> {{ form.address_region }}
 					<br> {{ form.address_city }}
 					<br> {{ form.address_street }}
-					<br> {{ form.address_office }}
+					<br> {{ form.address_office }} {{ form.author }}
 					<br> </div>
 			</div>
 			<button class="btn btn-success" type="submit">Добавить объявление</button>
 		</form>
+		<script>
+		var name = '{{ user.id }}';
+		document.getElementById('username_author').value = name;
+		</script>
 	</div> {% endblock %}

@@ -18,8 +18,13 @@
 				<div class="col-8"> {{ form.price }}
 					<br> {{ form.additionalinfo }}
 					<br> {{ form.contact }}
+                    {{ form.author }}
 					<br> </div>
 			</div>
 			<button class="btn btn-success" type="submit">Добавить исполнителя</button>
 		</form>
+        <script>
+            var name = '{{ user.id }}';
+            document.getElementById('username_author').value = name;
+        </script>
 	</div> {% endblock %}

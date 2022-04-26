@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from requests import request
 
@@ -22,7 +23,7 @@ class Executor(models.Model):
     worktime_end = models.TimeField(verbose_name='[Время работы] Окончание')
     additionalinfo = models.CharField(max_length=500, verbose_name='Дополнительная информация', blank=True, null=True)
     weekends = models.CharField(max_length=50, choices=weekends)
-
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Ad(models.Model):
     class Meta:
@@ -41,3 +42,4 @@ class Ad(models.Model):
     address_office = models.CharField(max_length=100, verbose_name='[Адрес] Дом, корпус, помещение')
 
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)

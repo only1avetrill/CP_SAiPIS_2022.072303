@@ -13,7 +13,17 @@ body {
 </style>
 <body>
 	<main>
-		<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+		{% if user.is_authenticated %}
+         <div class="px-4 my-1 text-center mx-auto col-lg-4">
+			<p class=" mb-3">
+				<div class="p-2 p-md-5 border-warning rounded-3 bg-warning" style="margin-top: 100px">
+					<p class=" mb-1">
+						<h4>
+                Действие недоступно, так как Вы уже авторизованы!<br><br>Перейдите на главную страницу либо выйдите из учётной записи.</h4>
+						<hr class="my-3"> <a href='{% url 'main' %}' type="button" class="w-100 btn btn-lg btn-dark mb-2" style="font-size: 20px">Главная</a> <a href='{% url 'logout' %}' type="button" class="w-100 btn btn-lg btn-dark mb-2" style="font-size: 20px">Выйти</a></div>
+		</div>
+        {% else %}
+        <div class="container col-xl-10 col-xxl-8 px-4 py-5">
 			<div class="row align-items-center g-lg-5 py-5">
 				<div class="col-lg-7 text-center text-lg-start">
 					<h1 class="display-4 fw-bold lh-1 mb-3" style="color: aliceblue">Выбор подрядчиков на озеленение</h1>
@@ -36,6 +46,9 @@ body {
 						<hr class="my-3"> <a href='{% url 'register' %}' type="button" class="w-100 btn btn-lg btn-secondary mb-2" style="font-size: 20px">Регистрация</a></div>
 				</div>
 			</div>
+        {% endif %}
+
+
 	</main>
 </body>
 </html>

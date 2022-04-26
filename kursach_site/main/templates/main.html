@@ -27,14 +27,15 @@
 		<h6><b>Бюджет:</b> {{ el.budget }} руб.</h6>
 		<h6><b>Срок сдачи:</b> {{ el.deadline }}</h6>
 		<h6><b>Контактная информация:</b> {{ el.contact }}</h6>
-    {% if user.is_superuser %}
+    {% if user.id == el.author.id or user.is_superuser %}
         <div align="right">
     <a href="/editad/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
 <a href="/deletead/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
 </div>
         </div>
-
+    {% else %} </div>
     {% endif %}
+
 
 
 {% endfor %} {% else %}

@@ -16,7 +16,7 @@ class AddAdForm(ModelForm):
     class Meta:
         model = Ad
         fields = ['title', 'area', 'budget', 'deadline', 'address_index', 'address_region', 'address_city',
-                  'address_street', 'address_office', 'contact']
+                  'address_street', 'address_office', 'contact', 'author']
 
         widgets = {
             'title': TextInput(attrs={
@@ -69,13 +69,19 @@ class AddAdForm(ModelForm):
                 'style': 'height: 40px',
                 'placeholder': 'Контактная информация',
             }),
+            'author': TextInput(attrs={
+                'class': 'form-control',
+                'value': '',
+                'id': 'username_author',
+                'type': 'hidden',
+            })
         }
 
 
 class AddExecutorForm(ModelForm):
     class Meta:
         model = Executor
-        fields = ['title', 'price', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends']
+        fields = ['title', 'price', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends', 'author']
 
         widgets = {
             'title': TextInput(attrs={
@@ -113,4 +119,10 @@ class AddExecutorForm(ModelForm):
                 'style': 'height: 40px',
                 'placeholder': 'Выходные',
             }),
+            'author': TextInput(attrs={
+                'class': 'form-control',
+                'value': '',
+                'id': 'username_author',
+                'type': 'hidden',
+            })
         }
