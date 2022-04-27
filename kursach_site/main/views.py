@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
 
 from .forms import CreateUserForm, AddAdForm, AddExecutorForm
 from .models import Ad, Executor
@@ -49,8 +50,18 @@ def ExecutorsPage(request):
 
 
 @login_required
-def ProfilePage(request):
-    return render(request, 'profile.html')
+def AnalyticsPage(request):
+    user_count = User.objects.all().count()
+    executor_count = Executor.objects.all().count()
+    ad_count = Ad.objects.all().count()
+
+    data = {
+        'user_count': user_count,
+        'executor_count': executor_count,
+        'ad_count': ad_count
+    }
+
+    return render(request, 'analytics.html', data)
 
 
 @login_required
@@ -186,3 +197,5 @@ def EditAd(request, id):
     }
 
     return render(request, 'edit_ad.html', data)
+
+

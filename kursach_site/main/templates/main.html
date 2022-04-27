@@ -1,7 +1,7 @@
 {% extends 'BASE.html' %} {% block title %}Главная{% endblock %} {% block mainbuttons %}
 <li><a href='{% url 'main' %}' class="nav-link px-2 text-white">Главная</a></li>
 <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
-<li><a href='{% url 'profile' %}' class="nav-link px-2 text-secondary">Профиль</a></li> {% endblock %} {% block main %}
+<li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %} {% block main %}
 <div class="px-4 pt-5 my-1 text-center border-bottom">
 	<h1 class="display-5 fw-bold">Объявления</h1>
 	<div class="col-lg-12 mx-auto">
@@ -29,6 +29,7 @@
 		<h6><b>Контактная информация:</b> {{ el.contact }}</h6>
     {% if user.id == el.author.id or user.is_superuser %}
         <div align="right">
+        {% if user.is_superuser %}<br><h6><b>Автор:</b> {{ el.author }}</h6>{% endif %}
     <a href="/editad/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
 <a href="/deletead/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
 </div>

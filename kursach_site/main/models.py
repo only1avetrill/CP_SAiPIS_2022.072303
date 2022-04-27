@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.conf import settings
 from django.contrib.auth.models import User
+from datetime import date
 
 from requests import request
 
