@@ -6,11 +6,14 @@ from datetime import date
 
 from requests import request
 
-
 class Executor(models.Model):
     weekends = (
         ('без выходных', 'без выходных'),
         ('с выходными, требуется уточнение', 'с выходными, требуется уточнение')
+    )
+
+    ranks = (
+        ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')
     )
 
     class Meta:
@@ -19,11 +22,13 @@ class Executor(models.Model):
 
     title = models.CharField(max_length=50, verbose_name='Название')
     price = models.IntegerField(verbose_name='Стоимость услуг', validators=[MinValueValidator(0)])
+    minarea = models.IntegerField(verbose_name='Минимальная площадь для заказа', validators=[MinValueValidator(0)])
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
     worktime_start = models.TimeField(verbose_name='[Время работы] Начало')
     worktime_end = models.TimeField(verbose_name='[Время работы] Окончание')
     additionalinfo = models.CharField(max_length=500, verbose_name='Дополнительная информация', blank=True, null=True)
     weekends = models.CharField(max_length=50, choices=weekends)
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Ad(models.Model):
@@ -43,4 +48,5 @@ class Ad(models.Model):
     address_office = models.CharField(max_length=100, verbose_name='[Адрес] Дом, корпус, помещение')
 
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
+    actual = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)

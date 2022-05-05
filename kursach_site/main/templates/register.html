@@ -27,21 +27,33 @@ body {
 			<div class="row align-items-center g-lg-5 py-5">
 				<div class="col-lg-7 text-center text-lg-start">
 					<h1 class="display-4 fw-bold lh-1 mb-3" style="color: aliceblue">Регистрация</h1>
-					<p class="col-lg-10 fs-5" style="color: aliceblue">Создайте учётную запись для доступа к сервису.
-						<br>Используйте надёжный пароль и не передавайте свои учётные данные третьим лицам.</p>
+					<p class="col-lg-10 fs-6" style="color: aliceblue">Создайте учётную запись для доступа к сервису.
+						<br>Используйте надёжный пароль и не передавайте свои учётные данные третьим лицам.<br><br>Имя пользователя должно иметь не более 150 символов. Только буквы, цифры и символы @/./+/-/_.<br>
+                    Пароль должен содержать как минимум 8 символов и не может состоять только из цифр.</p>
 				</div>
 				<div class="col-md-10 mx-auto col-lg-5" align="center">
 					<div class="p-4 p-md-5 border rounded-3 bg-light">
 						<form method="post"> {% csrf_token %} {% for p in form %}
+                            {% if p.label != 'Адрес электронной почты' %}
 							<div style="margin-bottom: 10px">
 								<label for="{{ p.id_for_label }}">
 									<h5>{{ p.label }}:</h5>
 									<div style="font-size: 20px">{{ p }}</div>
-									<div>{{ p.errors }}</div>
-							</div> {% endfor %}
+									<div>{{ p.form.errors }}</div>
+                            {% endif %}
+							 {% endfor %}
+                        <h5>Тип учетной записи:</h5>
+                        <div style="font-size: 20px">
+                            <select name=type>
+                                <option value="detsad">Детский сад</option>
+                                <option value="ozelen">Озеленитель</option>
+                            </select>
+                        </div>
+                        </div>
+
 							<div class='homebutton'>
 								<p>
-									<button class="w-100 btn btn-lg btn-dark" style="font-size: 20px; margin-top: 10px" type="submit"> Регистрация </button>
+									<button class="w-100 btn btn-lg btn-dark" style="font-size: 20px; margin-top: 10px" type="submit">Регистрация</button>
 									<hr class="my-3"> <a href='{% url 'auth' %}' type="button" class="w-100 btn btn-lg btn-secondary mb-2" style="font-size: 20px">Авторизация</a> </form>
 						</div>
 					</div>

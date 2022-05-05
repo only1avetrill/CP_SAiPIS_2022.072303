@@ -3,6 +3,8 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest, request
 from django.urls import reverse_lazy
+import datetime
+from datetime import timedelta
 
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -10,10 +12,11 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
+from django.db.models import Q
+from online_users.models import OnlineUserActivity
 
-from .forms import CreateUserForm, AddAdForm, AddExecutorForm
+from .forms import *
 from .models import Ad, Executor
-
 
 @login_required
 def AboutPage(request):
@@ -22,15 +25,27 @@ def AboutPage(request):
 
 @login_required
 def MainPage(request):
-    ads = Ad.objects.all()
-    return render(request, 'main.html', {'ads': ads})
+    timeToday = datetime.date.today()
 
+    ads = Ad.objects.all()
+
+    search = request.GET.get('search', '')
+    if search:
+        ads = Ad.objects.filter(Q(title__icontains=search))
+    else:
+        Ad.objects.all()
+
+    data = {
+        'timeToday': timeToday,
+        'ads': ads,
+    }
+
+    return render(request, 'main.html', data)
 
 @login_required
 def sortAds(request, sort_slug):
     ads = Ad.objects.order_by(sort_slug)
     return render(request, 'main.html', {'ads': ads})
-
 
 @login_required
 def sortExecutors(request, sort_slug):
@@ -46,7 +61,17 @@ def AddSuccess(request):
 @login_required
 def ExecutorsPage(request):
     executors = Executor.objects.all()
-    return render(request, 'executors.html', {'executors': executors})
+    form = AddExecutorForm(request.POST)
+
+
+
+    search = request.GET.get('search', '')
+    if search:
+        executors = Executor.objects.filter(Q(title__icontains=search))
+    else:
+        Executor.objects.all()
+
+    return render(request, 'executors.html', {'executors': executors, 'form': form})
 
 
 @login_required
@@ -55,10 +80,14 @@ def AnalyticsPage(request):
     executor_count = Executor.objects.all().count()
     ad_count = Ad.objects.all().count()
 
+    user_activity_objects = OnlineUserActivity.get_user_activities((timedelta(minutes=0.1)))
+    number_of_active_users = user_activity_objects.count()
+
     data = {
         'user_count': user_count,
         'executor_count': executor_count,
-        'ad_count': ad_count
+        'ad_count': ad_count,
+        'online': number_of_active_users
     }
 
     return render(request, 'analytics.html', data)
@@ -114,7 +143,13 @@ def RegisterUser(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
+            uname = request.POST.get('username')
+            type_ = request.POST.get('type')
+            form.email = type_
             form.save()
+            us = User.objects.get(username=uname)
+            us.first_name = type_
+            us.save()
             return redirect('auth')
 
     form = CreateUserForm
@@ -178,6 +213,7 @@ def EditExecutor(request, id):
 
     return render(request, 'edit_executor.html', data)
 
+
 @login_required
 def EditAd(request, id):
     ad = Ad.objects.get(id=id)
@@ -197,5 +233,3 @@ def EditAd(request, id):
     }
 
     return render(request, 'edit_ad.html', data)
-
-

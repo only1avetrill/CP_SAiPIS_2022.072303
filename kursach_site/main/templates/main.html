@@ -9,7 +9,7 @@
                     предложения конкурентов</a>.</p>
 	</div>
 	<div class="overflow-hidden" style="max-height: 30vh;">
-		<div class="container px-5"><img src="https://user-images.githubusercontent.com/75385700/164297220-fb66f069-64c4-436c-b553-bd96f8e75317.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy"></div>
+		<div class="container px-5"><img src="https://user-images.githubusercontent.com/75385700/164297220-fb66f069-64c4-436c-b553-bd96f8e75317.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Main page image" width="700" height="500" loading="lazy"></div>
 	</div>
 </div>
 <div class="px-4 pt-5 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'area' %}">По площади
@@ -17,16 +17,35 @@
         ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' 'budget' %}">По бюджету ↑</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'main' %}">Стандартный порядок</a></div>
 <div class="px-4 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-area' %}">По площади
         работы
-        ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-deadline' %}">По сроку сдачи ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-budget' %}">По бюджету ↓</a></div>
-<div class="px-4 pt-2 my-1"> {% if ads %} {% for el in ads %}
+        ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-deadline' %}">По сроку сдачи ↓</a> <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortAds' '-budget' %}">По бюджету ↓</a>
+
+<form class="form-inline my-lg-1" action="{% url 'main' %}">
+       <button class="btn btn-dark btn-lg px-2 btn-sm" type="submit">Поиск</button>
+    <input class="form-control" type="search" placeholder="Поиск..." aria-label="search" name="search">
+
+
+</form>
+
+</div>
+<div class="px-4 pt-2 my-1">
+
+
+    {% if ads %} {% for el in ads %}
 	<div class="alert alert-secondary">
-		<h3><b>Детский сад «{{ el.title }}»</b></h3>
+		<h3><b>Детский сад «{{ el.title }}»</b>
+            {% if el.actual == True %}
+        <button type="button" class="btn btn-success btn-sm" disabled style="margin-left: 5px">На {{ timeToday }} актуально!</button></h3>
+    {% else %}
+                <button type="button" class="btn btn-danger btn-sm" disabled style="margin-left: 5px">На {{ timeToday }} не актуально!</button></h3>
+            {% endif %}
 		<h6><b>Площадь заказа:</b> {{ el.area }} кв. м.</h6>
 		<h6><b>Адрес заказа:</b> {{ el.address_index }}, {{ el.address_region }}
                 обл., {{ el.address_city }}, {{ el.address_street }}, {{ el.address_office }}</h6>
 		<h6><b>Бюджет:</b> {{ el.budget }} руб.</h6>
 		<h6><b>Срок сдачи:</b> {{ el.deadline }}</h6>
 		<h6><b>Контактная информация:</b> {{ el.contact }}</h6>
+
+
     {% if user.id == el.author.id or user.is_superuser %}
         <div align="right">
         {% if user.is_superuser %}<br><h6><b>Автор:</b> {{ el.author }}</h6>{% endif %}

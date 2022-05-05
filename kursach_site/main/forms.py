@@ -1,22 +1,22 @@
-from django.forms import ModelForm, TextInput, DateInput, NumberInput, PasswordInput, TimeInput, Select
+from django.forms import ModelForm, TextInput, DateInput, NumberInput, PasswordInput, TimeInput, Select, CheckboxInput
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Executor, Ad
+from .models import *
 
 
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2',]
+        fields = ['username', 'password1', 'password2', 'email']
 
 
 class AddAdForm(ModelForm):
     class Meta:
         model = Ad
         fields = ['title', 'area', 'budget', 'deadline', 'address_index', 'address_region', 'address_city',
-                  'address_street', 'address_office', 'contact', 'author']
+                  'address_street', 'address_office', 'contact', 'actual', 'author']
 
         widgets = {
             'title': TextInput(attrs={
@@ -69,6 +69,10 @@ class AddAdForm(ModelForm):
                 'style': 'height: 40px',
                 'placeholder': 'Контактная информация',
             }),
+            'actual': CheckboxInput(
+                attrs={'style': 'width:15px;height:15px'}
+            ),
+
             'author': TextInput(attrs={
                 'class': 'form-control',
                 'value': '',
@@ -81,7 +85,7 @@ class AddAdForm(ModelForm):
 class AddExecutorForm(ModelForm):
     class Meta:
         model = Executor
-        fields = ['title', 'price', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends', 'author']
+        fields = ['title', 'price', 'minarea', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends', 'author']
 
         widgets = {
             'title': TextInput(attrs={
@@ -92,7 +96,12 @@ class AddExecutorForm(ModelForm):
             'price': NumberInput(attrs={
                 'class': 'form-control',
                 'style': 'height: 40px',
-                'placeholder': 'Средняя стоимость работ за один кв. м.',
+                'placeholder': 'Средняя стоимость работ за один кв. м. в рублях',
+            }),
+            'minarea': NumberInput(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Минимальная площадь для заказа в кв. м.',
             }),
             'contact': TextInput(attrs={
                 'class': 'form-control',
@@ -124,5 +133,5 @@ class AddExecutorForm(ModelForm):
                 'value': '',
                 'id': 'username_author',
                 'type': 'hidden',
-            })
+            }),
         }
