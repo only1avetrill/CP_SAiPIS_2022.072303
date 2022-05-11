@@ -12,10 +12,6 @@ class Executor(models.Model):
         ('с выходными, требуется уточнение', 'с выходными, требуется уточнение')
     )
 
-    ranks = (
-        ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')
-    )
-
     class Meta:
         verbose_name = 'Исполнитель'
         verbose_name_plural = 'Исполнители'
@@ -30,6 +26,20 @@ class Executor(models.Model):
     weekends = models.CharField(max_length=50, choices=weekends)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ExecutorRank(models.Model):
+    ranks = (
+        ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')
+    )
+
+    class Meta:
+        verbose_name = 'Оценка'
+        verbose_name_plural = 'Оценки'
+
+    executor = models.ForeignKey(Executor, on_delete=models.CASCADE)
+    rank = models.CharField(max_length=50, choices=ranks)
+
 
 class Ad(models.Model):
     class Meta:
@@ -50,3 +60,4 @@ class Ad(models.Model):
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
     actual = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+

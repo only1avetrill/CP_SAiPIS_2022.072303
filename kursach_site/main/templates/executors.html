@@ -18,9 +18,9 @@
         стоимости ↓</a>
 <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' '-minarea' %}">По минимальной площади ↓</a>
 
-   <form class="form-inline my-lg-1" action="{% url 'executors' %}">
-       <button class="btn btn-dark btn-lg px-2 btn-sm" type="submit">Поиск</button>
+  <form class="form-inline my-lg-1" action="{% url 'executors' %}">
     <input class="form-control" type="search" placeholder="Поиск..." aria-label="search" name="search">
+</form>
 
 
 </form>
@@ -38,8 +38,12 @@
 		<h6><b>Дополнительная информация:</b> {{ el.additionalinfo }}</h6>
 
     <div align="right">
+     {% if user.first_name == 'detsad' %}
+         <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-primary btn-sm" style="font-size: 15px">Оценить</a>
+             {% endif %}
      {% if user.id == el.author.id or user.is_superuser %}
         {% if user.is_superuser %}<br><h6><b>Автор:</b> {{ el.author }}</h6>{% endif %}
+
      <a href="/editexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
 <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
 </div>

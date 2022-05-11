@@ -11,6 +11,17 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2', 'email']
 
+class RateExecForm(UserCreationForm):
+    class Meta:
+        model = ExecutorRank
+        fields = ['executor', 'rank']
+
+        widgets = {
+            'rank': Select(attrs={
+                'class': 'form-control',
+                'style': 'height: 40px',
+                'placeholder': 'Наименование организации (ООО, ОАО, ИП, ...)',
+            })}
 
 class AddAdForm(ModelForm):
     class Meta:

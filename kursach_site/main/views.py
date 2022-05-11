@@ -18,10 +18,10 @@ from online_users.models import OnlineUserActivity
 from .forms import *
 from .models import Ad, Executor
 
+
 @login_required
 def AboutPage(request):
     return render(request, 'about.html')
-
 
 @login_required
 def MainPage(request):
@@ -31,7 +31,7 @@ def MainPage(request):
 
     search = request.GET.get('search', '')
     if search:
-        ads = Ad.objects.filter(Q(title__icontains=search))
+        ads = Ad.objects.filter(Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
     else:
         Ad.objects.all()
 
@@ -42,10 +42,12 @@ def MainPage(request):
 
     return render(request, 'main.html', data)
 
+
 @login_required
 def sortAds(request, sort_slug):
     ads = Ad.objects.order_by(sort_slug)
     return render(request, 'main.html', {'ads': ads})
+
 
 @login_required
 def sortExecutors(request, sort_slug):
@@ -61,17 +63,14 @@ def AddSuccess(request):
 @login_required
 def ExecutorsPage(request):
     executors = Executor.objects.all()
-    form = AddExecutorForm(request.POST)
-
-
 
     search = request.GET.get('search', '')
     if search:
-        executors = Executor.objects.filter(Q(title__icontains=search))
+        executors = Executor.objects.filter(Q(title__icontains=search) | Q(price__icontains=search))
     else:
         Executor.objects.all()
 
-    return render(request, 'executors.html', {'executors': executors, 'form': form})
+    return render(request, 'executors.html', {'executors': executors})
 
 
 @login_required
@@ -80,7 +79,7 @@ def AnalyticsPage(request):
     executor_count = Executor.objects.all().count()
     ad_count = Ad.objects.all().count()
 
-    user_activity_objects = OnlineUserActivity.get_user_activities((timedelta(minutes=0.1)))
+    user_activity_objects = OnlineUserActivity.get_user_activities((timedelta(minutes=0.5)))
     number_of_active_users = user_activity_objects.count()
 
     data = {
