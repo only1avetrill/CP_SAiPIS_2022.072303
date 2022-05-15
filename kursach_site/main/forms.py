@@ -11,6 +11,7 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2', 'email']
 
+
 class RateExecForm(UserCreationForm):
     class Meta:
         model = ExecutorRank
@@ -22,6 +23,7 @@ class RateExecForm(UserCreationForm):
                 'style': 'height: 40px',
                 'placeholder': 'Наименование организации (ООО, ОАО, ИП, ...)',
             })}
+
 
 class AddAdForm(ModelForm):
     class Meta:
@@ -96,7 +98,8 @@ class AddAdForm(ModelForm):
 class AddExecutorForm(ModelForm):
     class Meta:
         model = Executor
-        fields = ['title', 'price', 'minarea', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end', 'weekends', 'author']
+        fields = ['title', 'price', 'minarea', 'contact', 'additionalinfo', 'worktime_start', 'worktime_end',
+                  'weekends', 'author']
 
         widgets = {
             'title': TextInput(attrs={
