@@ -6,6 +6,7 @@ from datetime import date
 
 from requests import request
 
+
 class Executor(models.Model):
     weekends = (
         ('без выходных', 'без выходных'),
@@ -60,4 +61,3 @@ class Ad(models.Model):
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
     actual = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-

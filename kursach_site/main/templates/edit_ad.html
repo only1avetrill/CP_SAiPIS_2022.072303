@@ -2,34 +2,33 @@
 <li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
 <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
 <li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %}
-
 {% block main %}
 <div class="px-4 pt-5 my-1 text-center">
-	<h1 class="display-5 fw-bold">Редактирование объявления</h1>
-	<div class="col-lg-12 mx-auto">
-		<p class="lead mb-3">Отредактируйте информацию, если Вы ошиблись или Ваши актуальные данные сменились.</p>
-
-	</div>
-	<div class="px-4 pt-2 my-1">
-		<form method="POST"> {% csrf_token %}
-			<div class="row">
-				<div class="col-4"> {{ form.title }}
-					<br> {{ form.area }}
-					<br> {{ form.budget }}
-					<br> {{ form.deadline }}
-					<br> {{ form.contact }}
-					<br> </div>
-				<div class="col-8"> {{ form.address_index }}
-					<br> {{ form.address_region }}
-					<br> {{ form.address_city }}
-					<br> {{ form.address_street }}
-					<br> {{ form.address_office }}
+    <h1 class="display-5 fw-bold">Редактирование объявления</h1>
+    <div class="col-lg-12 mx-auto">
+        <p class="lead mb-3">Отредактируйте информацию, если Вы ошиблись или Ваши актуальные данные сменились.</p>
+    </div>
+    <div class="px-4 pt-2 my-1">
+        <form method="POST"> {% csrf_token %}
+            <div class="row">
+                <div class="col-4"> {{ form.title }}
+                    <br> {{ form.area }}
+                    <br> {{ form.budget }}
+                    <br> {{ form.deadline }}
+                    <br> {{ form.contact }}
+                    <br>
+                </div>
+                <div class="col-8"> {{ form.address_index }}
+                    <br> {{ form.address_region }}
+                    <br> {{ form.address_city }}
+                    <br> {{ form.address_street }}
+                    <br> {{ form.address_office }}
                     {{ form.author }}
-					<br> </div>
-			</div>
+                    <br>
+                </div>
+            </div>
             <h4>Актуальность на сегодняшний день: {{ form.actual }}</h4><br>
-
-			<button class="btn btn-success" type="submit">Сохранить</button>
-		</form>
-	</div>
-{% endblock %}
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </form>
+    </div>
+    {% endblock %}

@@ -23,7 +23,6 @@ urlpatterns = [
     path('deletead/<int:id>', views.DeleteAd),
     path('editad/<int:id>', views.EditAd),
 
-
     path('loginrequired', views.LoginRequired, name="loginrequired"),
 
     path('logout', views.logout_user, name="logout"),

@@ -23,6 +23,7 @@ from .models import Ad, Executor
 def AboutPage(request):
     return render(request, 'about.html')
 
+
 @login_required
 def MainPage(request):
     timeToday = datetime.date.today()
@@ -31,7 +32,8 @@ def MainPage(request):
 
     search = request.GET.get('search', '')
     if search:
-        ads = Ad.objects.filter(Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
+        ads = Ad.objects.filter(
+            Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
     else:
         Ad.objects.all()
 

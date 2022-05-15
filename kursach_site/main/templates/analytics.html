@@ -1,37 +1,40 @@
 {% extends 'base.html' %} {% block title %}Аналитика{% endblock %} {% block mainbuttons %}
-    <li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
-    <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
-    <li><a href='{% url 'analytics' %}' class="nav-link px-2 text-white">Аналитика</a></li> {% endblock %}
-
-
+<li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
+<li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
+<li><a href='{% url 'analytics' %}' class="nav-link px-2 text-white">Аналитика</a></li> {% endblock %}
 {% block main %}
-    <div class="px-4 pt-2 my-1">
-<div class="row">
-				<div class="col-4">
-        <div class="card w-100 text-black bg-light border-dark">
-            <div class="card-header">Статистика</div>
-            <div class="card-body text-dark">
-                <h4>Пользователи</h4>
-                Зарегистрировано пользователей: {{ user_count }}<p>
-                Пользователей в сети: {{ online }}<p>
-                <h4>База данных</h4>
-                Добавлено подрядчиков: {{ executor_count }}<br>
-                <p class="card-text">Добавлено объявлений: {{ ad_count }}
-            </div>
-        </div> </div>
-<div class="col-8">
-    <div class="card w-100 text-black bg-light border-dark">
-            <div class="card-header">Графика</div>
-            <div class="card-body text-dark">
-                <h4>Пользователи</h4>
-                Зарегистрировано пользователей: {{ user_count }}<p>
-                Пользователей в сети:<p>
-                <h4>База данных</h4>
-                Добавлено подрядчиков: {{ executor_count }}<br>
-                <p class="card-text">Добавлено объявлений: {{ ad_count }}
+<div class="px-4 pt-2 my-1">
+    <div class="row">
+        <div class="col-4">
+            <div class="card w-100 text-black bg-light border-dark">
+                <div class="card-header">Статистика</div>
+                <div class="card-body text-dark">
+                    <h4>Пользователи</h4>
+                    Зарегистрировано пользователей: {{ user_count }}
+                    <p>
+                        Пользователей в сети: {{ online }}
+                    <p>
+                    <h4>База данных</h4>
+                    Добавлено подрядчиков: {{ executor_count }}<br>
+                    <p class="card-text">Добавлено объявлений: {{ ad_count }}
+                </div>
             </div>
         </div>
-</div></div>
+        <div class="col-8">
+            <div class="card w-100 text-black bg-light border-dark">
+                <div class="card-header">Графика</div>
+                <div class="card-body text-dark">
+                    <h4>Пользователи</h4>
+                    Зарегистрировано пользователей: {{ user_count }}
+                    <p>
+                        Пользователей в сети:
+                    <p>
+                    <h4>База данных</h4>
+                    Добавлено подрядчиков: {{ executor_count }}<br>
+                    <p class="card-text">Добавлено объявлений: {{ ad_count }}
+                </div>
+            </div>
+        </div>
     </div>
-
+</div>
 {% endblock %}

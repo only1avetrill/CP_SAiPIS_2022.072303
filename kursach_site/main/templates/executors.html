@@ -1,61 +1,60 @@
 {% extends 'base.html' %} {% block title %}Подрядчики{% endblock %} {% block mainbuttons %}
 <li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
 <li><a href='{% url 'executors' %}' class="nav-link px-2 text-white">Подрядчики</a></li>
-<li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %} {% block main %}
+<li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %}
+{% block main %}
 <div class="px-4 pt-5 my-1 text-center">
-	<h1 class="display-5 fw-bold">Подрядчики</h1>
-	<div class="col-lg-12 mx-auto">
-		<p class="lead mb-4">Если Вы представитель детского сада (заказчик), то Вы можете выбрать подрядчика по необходимым критериям из списка, а также <a href="{% url 'addad' %}">подать объявление о его поиске</a>. Если Вы представитель организации по озеленению (подрядчик),то Вы можете изучить предложения конкурентов, а также <a href="{% url 'main' %}">найти подходящий заказ</a>.</p>
-	</div>
+    <h1 class="display-5 fw-bold">Подрядчики</h1>
+    <div class="col-lg-12 mx-auto">
+        <p class="lead mb-4">Если Вы представитель детского сада (заказчик), то Вы можете выбрать подрядчика по
+            необходимым критериям из списка, а также <a href="{% url 'addad' %}">подать объявление о его поиске</a>.
+            Если Вы представитель организации по озеленению (подрядчик),то Вы можете изучить предложения
+            конкурентов, а также <a href="{% url 'main' %}">найти подходящий заказ</a>.</p>
+    </div>
 </div>
 <div class="px-4 pt-5 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' 'price' %}">По
         средней
         стоимости ↑</a>
-   <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' 'minarea' %}">По минимальной площади ↑</a>
-    <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'executors' %}">Стандартный порядок</a></div>
+    <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' 'minarea' %}">По минимальной площади
+        ↑</a>
+    <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'executors' %}">Стандартный порядок</a>
+</div>
 <div class="px-4 my-1"><a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' '-price' %}">По
         средней
         стоимости ↓</a>
-<a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' '-minarea' %}">По минимальной площади ↓</a>
-
-  <form class="form-inline my-lg-1" action="{% url 'executors' %}">
-    <input class="form-control" type="search" placeholder="Поиск..." aria-label="search" name="search">
-</form>
-
-
-</form>
-
-
+    <a class="btn btn-dark btn-lg px-2 btn-sm" href="{% url 'sortExecutors' '-minarea' %}">По минимальной площади
+        ↓</a>
+    <form class="form-inline my-lg-1" action="{% url 'executors' %}">
+        <input class="form-control" type="search" placeholder="Поиск..." aria-label="search" name="search">
+    </form>
+    </form>
 </div>
 <div class="px-4 pt-2 my-1"> {% if executors %} {% for el in executors %}
-	<div class="alert alert-secondary">
-		<h3><b>{{ el.title }}</b></h3>
-		<h6><b>Средняя стоимость работ за один кв. м.:</b> {{ el.price }} руб.</h6>
-    <h6><b>Минимальная площадь для заказа:</b> {{ el.minarea }} кв. м.</h6>
-		<h6><b>Контактная информация:</b> {{ el.contact }}</h6>
-		<h6><b>Время работы:</b> {{ el.worktime_start }} - {{ el.worktime_end }} ({{ el.weekends }})</h6>
-		<br>
-		<h6><b>Дополнительная информация:</b> {{ el.additionalinfo }}</h6>
-
-    <div align="right">
-     {% if user.first_name == 'detsad' %}
-         <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-primary btn-sm" style="font-size: 15px">Оценить</a>
-             {% endif %}
-     {% if user.id == el.author.id or user.is_superuser %}
-        {% if user.is_superuser %}<br><h6><b>Автор:</b> {{ el.author }}</h6>{% endif %}
-
-     <a href="/editexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
-<a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
-</div>
+    <div class="alert alert-secondary">
+        <h3><b>{{ el.title }}</b></h3>
+        <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ el.price }} руб.</h6>
+        <h6><b>Минимальная площадь для заказа:</b> {{ el.minarea }} кв. м.</h6>
+        <h6><b>Контактная информация:</b> {{ el.contact }}</h6>
+        <h6><b>Время работы:</b> {{ el.worktime_start }} - {{ el.worktime_end }} ({{ el.weekends }})</h6>
+        <br>
+        <h6><b>Дополнительная информация:</b> {{ el.additionalinfo }}</h6>
+        <div align="right">
+            {% if user.first_name == 'detsad' %}
+            <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-primary btn-sm" style="font-size: 15px">Оценить</a>
+            {% endif %}
+            {% if user.id == el.author.id or user.is_superuser %}
+            {% if user.is_superuser %}<br>
+            <h6><b>Автор:</b> {{ el.author }}</h6>{% endif %}
+            <a href="/editexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
+            <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
         </div>
-    {% else %} </div></div>
-    {% endif %}
-
-
-
+    </div>
+    {% else %}
+</div>
+</div>
+{% endif %}
 {% endfor %} {% else %}
-
-    <div class="alert alert-danger text-center">
-		<h3><b>Подрядчиков нет!</b></h3>
-		<h10>Добавьте нового либо повторите попытку позже.</h10>
-	</div> {% endif %} </div> {% endblock %}
+<div class="alert alert-danger text-center">
+    <h3><b>Подрядчиков нет!</b></h3>
+    <h10>Добавьте нового либо повторите попытку позже.</h10>
+</div> {% endif %} </div> {% endblock %}

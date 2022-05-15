@@ -1,42 +1,48 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>{% block title %}{% endblock %}</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
-
 <body>
-	<main>
-		<header class="p-3 bg-dark text-white sticky-top">
-			<div class="container">
-				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"> {% block mainbuttons %}{% endblock %} </ul>
-					<div class="text-end"> <span class="px-2 text-secondary">Здравствуйте, <strong>{{ user.username }}</strong>!</span>
-						<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Действия </button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"> {% if user.is_superuser %}
-							<li><a class="dropdown-item" href="./admin" target="_blank">Панель управления</a></li>
-							<ul class="nav justify-content-center border-bottom"></ul> {% endif %}
+    <main>
+        <header class="p-3 bg-dark text-white sticky-top">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        {% block mainbuttons %}{% endblock %} </ul>
+                    <div class="text-end"><span class="px-2 text-secondary">Здравствуйте, <strong>{{ user.username }}</strong>!</span>
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Действия
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"> {% if user.is_superuser %}
+                            <li><a class="dropdown-item" href="./admin" target="_blank">Панель управления</a></li>
+                            <ul class="nav justify-content-center border-bottom"></ul> {% endif %}
 
-							{% if user.first_name == 'ozelen' or user.is_superuser %}<li><a class="dropdown-item" href="{% url 'addexec' %}">Добавить подрядчика</a></li>{% endif %}
-							{% if user.first_name != 'ozelen' %}<li><a class="dropdown-item" href="{% url 'addad' %}">Добавить объявление</a></li>{% endif %}
-							<ul class="nav justify-content-center border-bottom"></ul>
-							<li><a class="dropdown-item" href="{% url 'logout' %}">Выход</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</header> {% block main %} {% endblock %} </main>
+                            {% if user.first_name == 'ozelen' or user.is_superuser %}
+                            <li><a class="dropdown-item" href="{% url 'addexec' %}">Добавить подрядчика</a>
+                            </li>{% endif %}
+                            {% if user.first_name != 'ozelen' %}
+                            <li><a class="dropdown-item" href="{% url 'addad' %}">Добавить объявление</a>
+                            </li>{% endif %}
+                            <ul class="nav justify-content-center border-bottom"></ul>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Выход</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header> {% block main %} {% endblock %}
+    </main>
 </body>
 <div class="container">
-	<footer class="py-3 my-4">
-		<ul class="nav justify-content-center border-bottom pb-3 mb-3"></ul>
-		<p class="text-center text-muted">© 2022 Rocknox Interactive | <a href='{% url 'about' %}'>О сайте / Связь с нами</a> </footer>
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3"></ul>
+        <p class="text-center text-muted">© 2022 Rocknox Interactive | <a href='{% url 'about' %}'>О сайте / Связь с
+                нами</a>
+    </footer>
 </div>
-
 </html>
