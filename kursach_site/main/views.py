@@ -23,7 +23,6 @@ from .models import Ad, Executor
 def AboutPage(request):
     return render(request, 'about.html')
 
-
 @login_required
 def MainPage(request):
     timeToday = datetime.date.today()
@@ -32,8 +31,7 @@ def MainPage(request):
 
     search = request.GET.get('search', '')
     if search:
-        ads = Ad.objects.filter(
-            Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
+        ads = Ad.objects.filter(Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
     else:
         Ad.objects.all()
 
@@ -77,6 +75,13 @@ def ExecutorsPage(request):
 
 @login_required
 def AnalyticsPage(request):
+    labels = []
+    data = []
+    queryset = Executor.objects.all()
+    for executor in queryset:
+        labels.append(executor.title)
+        data.append(executor.price)
+
     user_count = User.objects.all().count()
     executor_count = Executor.objects.all().count()
     ad_count = Ad.objects.all().count()
@@ -88,7 +93,9 @@ def AnalyticsPage(request):
         'user_count': user_count,
         'executor_count': executor_count,
         'ad_count': ad_count,
-        'online': number_of_active_users
+        'online': number_of_active_users,
+        'labels': labels,
+        'data': data
     }
 
     return render(request, 'analytics.html', data)
