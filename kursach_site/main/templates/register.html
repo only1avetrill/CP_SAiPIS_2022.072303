@@ -40,13 +40,13 @@
                 </div>
                 <div class="col-md-10 mx-auto col-lg-5" align="center">
                     <div class="p-4 p-md-5 border rounded-3 bg-light">
-                        <form method="post"> {% csrf_token %} {% for p in form %}
+                        <form method="post"> {% csrf_token %}
+                            {% for p in form %}
                             {% if p.label != 'Адрес электронной почты' %}
                             <div style="margin-bottom: 10px">
                                 <label for="{{ p.id_for_label }}">
                                     <h5>{{ p.label }}:</h5>
                                     <div style="font-size: 20px">{{ p }}</div>
-                                    <div>{{ p.form.errors }}</div>
                                     {% endif %}
                                     {% endfor %}
                                     <h5>Тип учетной записи:</h5>
@@ -57,7 +57,7 @@
                                         </select>
                                     </div>
                             </div>
-
+                        <div align="left">{{ form.non_field_errors }}</div>
                             <div class='homebutton'>
                                 <p>
                                     <button class="w-100 btn btn-lg btn-dark" style="font-size: 20px; margin-top: 10px" type="submit">Регистрация

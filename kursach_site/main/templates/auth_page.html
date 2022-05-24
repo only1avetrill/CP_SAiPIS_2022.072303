@@ -38,8 +38,9 @@
                                 <label for="{{ p.id_for_label }}">
                                     <h5>{{ p.label }}:</h5>
                                     <div style="font-size: 20px">{{ p }}</div>
-                                    <div>{{ p.errors }}</div>
+
                             </div> {% endfor %}
+                        <div align="left">{{ form.non_field_errors }}</div>
                             <div class='homebutton'>
                                 <p>
                                     <button class="w-100 btn btn-lg btn-dark" style="font-size: 20px; margin-top: 10px" type="submit">Авторизация</button>

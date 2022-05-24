@@ -40,7 +40,7 @@
         <h6><b>Дополнительная информация:</b> {{ el.additionalinfo }}</h6>
         <div align="right">
             {% if user.first_name == 'detsad' %}
-            <a href="/deleteexecutor/{{ el.id }}" type="button" class="btn btn-lg btn-outline-primary btn-sm" style="font-size: 15px">Оценить</a>
+            <a href="/executors/{{ el.id }}" type="button" class="btn btn-lg btn-outline-primary btn-sm" style="font-size: 15px">Просмотреть</a>
             {% endif %}
             {% if user.id == el.author.id or user.is_superuser %}
             {% if user.is_superuser %}<br>

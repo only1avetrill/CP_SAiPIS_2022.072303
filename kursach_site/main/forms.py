@@ -12,16 +12,15 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'password1', 'password2', 'email']
 
 
-class RateExecForm(UserCreationForm):
+class RateExecForm(ModelForm):
     class Meta:
         model = ExecutorRank
-        fields = ['executor', 'rank']
+        fields = ['executor', 'user', 'rank']
 
         widgets = {
             'rank': Select(attrs={
                 'class': 'form-control',
                 'style': 'height: 40px',
-                'placeholder': 'Наименование организации (ООО, ОАО, ИП, ...)',
             })}
 
 

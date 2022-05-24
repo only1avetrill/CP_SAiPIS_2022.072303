@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from .views import ExecutorDetail
 
 urlpatterns = [
     path('ad/sort/<slug:sort_slug>', views.sortAds, name='sortAds'),
@@ -22,6 +23,8 @@ urlpatterns = [
 
     path('deletead/<int:id>', views.DeleteAd),
     path('editad/<int:id>', views.EditAd),
+
+    path('executors/<pk>', ExecutorDetail.as_view(), name='exec_details'),
 
     path('loginrequired', views.LoginRequired, name="loginrequired"),
 

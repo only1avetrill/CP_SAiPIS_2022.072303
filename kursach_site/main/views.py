@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpRequest, request
 from django.urls import reverse_lazy
 import datetime
 from datetime import timedelta
+from django.views.generic.detail import DetailView
 
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -17,7 +18,6 @@ from online_users.models import OnlineUserActivity
 
 from .forms import *
 from .models import Ad, Executor
-
 
 @login_required
 def AboutPage(request):
@@ -86,7 +86,7 @@ def AnalyticsPage(request):
     executor_count = Executor.objects.all().count()
     ad_count = Ad.objects.all().count()
 
-    user_activity_objects = OnlineUserActivity.get_user_activities((timedelta(minutes=0.5)))
+    user_activity_objects = OnlineUserActivity.get_user_activities((timedelta(minutes=1)))
     number_of_active_users = user_activity_objects.count()
 
     data = {
@@ -241,3 +241,6 @@ def EditAd(request, id):
     }
 
     return render(request, 'edit_ad.html', data)
+
+class ExecutorDetail(DetailView):
+    model = Executor

@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block title %}Подрядчики{% endblock %} {% block mainbuttons %}
+<li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
+<li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
+<li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %}
+{% block main %}
+
+<div class="px-4 pt-2 my-1">
+    <div class="alert alert-secondary">
+        <h3><b>{{ object.title }}</b></h3>
+        <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ object.price }} руб.</h6>
+        <h6><b>Минимальная площадь для заказа:</b> {{ object.minarea }} кв. м.</h6>
+        <h6><b>Контактная информация:</b> {{ object.contact }}</h6>
+        <h6><b>Время работы:</b> {{ object.worktime_start }} - {{ object.worktime_end }} ({{ object.weekends }})</h6>
+        <br>
+        <h6><b>Дополнительная информация:</b> {{ object.additionalinfo }}</h6>
+<div align="right">
+            {% if user.id == object.author.id or user.is_superuser %}
+            <a href="/editexecutor/{{ object.id }}" type="button" class="btn btn-lg btn-outline-dark btn-sm" style="font-size: 15px">Редактировать</a>
+            <a href="/deleteexecutor/{{ object.id }}" type="button" class="btn btn-lg btn-outline-danger btn-sm" style="font-size: 15px">Удалить</a>
+        </div>
+    </div>
+{% endif %}
+</div>
+</div>
+
+   <form method="POST"> {% csrf_token %}
+    {{ form.executor }}
+       {{ form.user }}
+       {{ form.rank }}
+   <button hidden class="btn btn-success" type="submit">Добавить исполнителя</button>
+   </form>
+{% endblock %}
