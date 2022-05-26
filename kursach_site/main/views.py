@@ -17,11 +17,15 @@ from django.db.models import Q
 from online_users.models import OnlineUserActivity
 
 from .forms import *
-from .models import Ad, Executor
+from .models import Ad, Executor, MethodMarks, MonkeyIsVoted
+
+Monkey = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
 
 @login_required
 def AboutPage(request):
     return render(request, 'about.html')
+
 
 @login_required
 def MainPage(request):
@@ -31,7 +35,8 @@ def MainPage(request):
 
     search = request.GET.get('search', '')
     if search:
-        ads = Ad.objects.filter(Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
+        ads = Ad.objects.filter(
+            Q(title__icontains=search) | Q(budget__icontains=search) | Q(address_city__icontains=search))
     else:
         Ad.objects.all()
 
@@ -242,5 +247,70 @@ def EditAd(request, id):
 
     return render(request, 'edit_ad.html', data)
 
-class ExecutorDetail(DetailView):
-    model = Executor
+
+def ExpertRank(request):
+    # expert1 = 0,14
+    # expert2 = 0,69
+    # expert3 = 0,17
+
+    executors = Executor.objects.all().order_by('-id')[:3]
+    isVoted = MonkeyIsVoted.objects.all()
+
+    if request.method == "POST":
+        mark1 = request.POST['mark1']
+        mark2 = request.POST['mark2']
+        mark3 = request.POST['mark3']
+        marks = MethodMarks.objects.create(mark1=mark1, mark2=mark2, mark3=mark3)
+        marks.save()
+        user = request.user.username
+        voted = MonkeyIsVoted.objects.create(user=user, is_voted=True)
+        voted.save()
+        return redirect('result')
+    else:
+        form = MonkeyForm()
+        data = {
+            'executors': executors,
+            'form': form,
+            'isVoted': isVoted,
+        }
+
+        return render(request, 'method.html', data)
+
+
+def ExpertMethod(request):
+    executors1 = Executor.objects.all().order_by('-id')[1]
+    executors2 = Executor.objects.all().order_by('-id')[2]
+    executors3 = Executor.objects.all().order_by('-id')[3]
+    expert = [0.14, 0.69, 0.17]
+    marks = MethodMarks.objects.all()
+    i = 0
+    j = 0
+    for mark in marks:
+        Monkey[i][j] = mark.mark1 * expert[i]
+        i += 1
+        Monkey[i][j] = mark.mark2 * expert[i]
+        i += 1
+        Monkey[i][j] = mark.mark3 * expert[i]
+        i = 0
+        j += 1
+    result1 = Monkey[0][0] + Monkey[1][0] + Monkey[2][0]
+    result2 = Monkey[0][1] + Monkey[1][1] + Monkey[2][1]
+    result3 = Monkey[0][2] + Monkey[1][2] + Monkey[2][2]
+    if result1 > result2 and result1 > result3:
+        result = result1
+        answer = 1
+    elif result2 > result1 and result2 > result3:
+        result = result2
+        answer = 2
+    else:
+        result = result3
+        answer = 3
+    data = {
+        'result': result,
+        'answer': answer,
+        'executor1': executors1,
+        'executor2': executors2,
+        'executor3': executors3,
+    }
+
+    return render(request, 'method_result.html', data)

@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block title %}Экспертное решение{% endblock %} {% block mainbuttons %}
+    <li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
+    <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
+    <li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %}
+{% block main %}
+    <div class="px-4 pt-5 my-1 text-center">
+    {% if user.first_name != 'ozelen' %}
+        {% if isVoted.user == user.get_username and isVoted.is_voted == True %}
+            ебало
+            {% else %}
+        <h1 class="display-5 fw-bold">Выбор подрядчика</h1>
+        <div class="col-lg-12 mx-auto">
+            <p class="lead mb-3">Введите свои оценки подрядчиков, чтобы получить результат в виде взвешенных экспертных
+                оценок для принятия решения.</p>
+        </div>
+        <div class="px-4 pt-2 my-1">
+            <form method="POST"> {% csrf_token %}
+                {{ form.mark1 }} {{ form.mark2 }} {{ form.mark3 }}
+                <br><br>
+                <button class="btn btn-success" type="submit">Оценить</button>
+            </form>
+        </div>
+        <div class="px-4 pt-2 my-1">{% for el in executors %}
+            <div class="alert alert-secondary">
+                <h3><b>{{ el.title }}</b></h3>
+                <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ el.price }} руб.</h6>
+                <h6><b>Минимальная площадь для заказа:</b> {{ el.minarea }} кв. м.</h6>
+                <h6><b>Контактная информация:</b> {{ el.contact }}</h6>
+                <h6><b>Время работы:</b> {{ el.worktime_start }} - {{ el.worktime_end }} ({{ el.weekends }})</h6>
+            </div>
+        {% endfor %}
+            {% endif %}
+        {% else %}
+        <h1 class="display-5 fw-bold">Доступ запрещён!</h1>
+        <div class="col-lg-12 mx-auto">
+            <p class="lead mb-3">Оценки подрядчиков доступны только представителем детских садов!</p>
+        </div>
+        {% endif %}
+{% endblock %}

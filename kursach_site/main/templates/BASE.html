@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -17,17 +17,16 @@
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         {% block mainbuttons %}{% endblock %} </ul>
                     <div class="text-end"><span class="px-2 text-secondary">Здравствуйте, <strong>{{ user.username }}</strong>!</span>
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Действия
-                        </button>
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Действия</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"> {% if user.is_superuser %}
                             <li><a class="dropdown-item" href="./admin" target="_blank">Панель управления</a></li>
                             <ul class="nav justify-content-center border-bottom"></ul> {% endif %}
-
                             {% if user.first_name == 'ozelen' or user.is_superuser %}
                             <li><a class="dropdown-item" href="{% url 'addexec' %}">Добавить подрядчика</a>
                             </li>{% endif %}
                             {% if user.first_name != 'ozelen' %}
                             <li><a class="dropdown-item" href="{% url 'addad' %}">Добавить объявление</a>
+                            <li><a class="dropdown-item" href="{% url 'method' %}">Экспертное решение</a>
                             </li>{% endif %}
                             <ul class="nav justify-content-center border-bottom"></ul>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Выход</a></li>
@@ -41,8 +40,7 @@
 <div class="container">
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3"></ul>
-        <p class="text-center text-muted">© 2022 Rocknox Interactive | <a href='{% url 'about' %}'>О сайте / Связь с
-                нами</a>
+        <p class="text-center text-muted">© 2022 Rocknox Interactive | <a href='{% url 'about' %}'>О сайте / Связь с нами</a>
     </footer>
 </div>
 </html>

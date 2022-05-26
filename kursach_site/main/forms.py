@@ -12,18 +12,6 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'password1', 'password2', 'email']
 
 
-class RateExecForm(ModelForm):
-    class Meta:
-        model = ExecutorRank
-        fields = ['executor', 'user', 'rank']
-
-        widgets = {
-            'rank': Select(attrs={
-                'class': 'form-control',
-                'style': 'height: 40px',
-            })}
-
-
 class AddAdForm(ModelForm):
     class Meta:
         model = Ad
@@ -148,3 +136,14 @@ class AddExecutorForm(ModelForm):
                 'type': 'hidden',
             }),
         }
+
+
+class MonkeyForm(forms.Form):
+    mark1 = forms.IntegerField()
+    mark2 = forms.IntegerField()
+    mark3 = forms.IntegerField()
+
+# class MonkeyForm(UserCreationForm):
+#     class Meta:
+#         model = MethodMarks
+#         fields = ['mark1', 'mark2', 'mark3']

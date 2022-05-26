@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block title %}Экспертное решение{% endblock %} {% block mainbuttons %}
+    <li><a href='{% url 'main' %}' class="nav-link px-2 text-secondary">Главная</a></li>
+    <li><a href='{% url 'executors' %}' class="nav-link px-2 text-secondary">Подрядчики</a></li>
+    <li><a href='{% url 'analytics' %}' class="nav-link px-2 text-secondary">Аналитика</a></li> {% endblock %}
+{% block main %}
+    <div class="px-4 pt-5 my-1 text-center">
+    {% if user.first_name != 'ozelen' %}
+        <h1 class="display-5 fw-bold">Выбор подрядчика</h1>
+        <div class="col-lg-12 mx-auto">
+            <p class="lead mb-3">Лучшим выбором является подрядчик {{ answer }} с итоговой оценкой {{ result }}.</p></div>
+        {% if answer == 1 %}
+        <div class="px-4 pt-2 my-1">
+            <div class="alert alert-success">
+                <h3><b>{{ executor1.title }}</b></h3>
+                <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ executor1.price }} руб.</h6>
+                <h6><b>Минимальная площадь для заказа:</b> {{ executor1.minarea }} кв. м.</h6>
+                <h6><b>Контактная информация:</b> {{ executor1.contact }}</h6>
+                <h6><b>Время работы:</b> {{ executor1.worktime_start }} - {{ executor1.worktime_end }} ({{ executor1.weekends }})</h6></div>
+            {% elif answer == 2 %}
+            <div class="px-4 pt-2 my-1"><div class="alert alert-success">
+                <h3><b>{{ executor2.title }}</b></h3>
+                <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ executor2.price }} руб.</h6>
+                <h6><b>Минимальная площадь для заказа:</b> {{ executor2.minarea }} кв. м.</h6>
+                <h6><b>Контактная информация:</b> {{ executor2.contact }}</h6>
+                <h6><b>Время работы:</b> {{ executor2.worktime_start }} - {{ executor2.worktime_end }} ({{ executor2.weekends }})</h6></div>
+            {% else %}
+            <div class="px-4 pt-2 my-1"><div class="alert alert-success">
+                <h3><b>{{ executor3.title }}</b></h3>
+                <h6><b>Средняя стоимость работ за один кв. м.:</b> {{ executor3.price }} руб.</h6>
+                <h6><b>Минимальная площадь для заказа:</b> {{ executor3.minarea }} кв. м.</h6>
+                <h6><b>Контактная информация:</b> {{ executor3.contact }}</h6>
+                <h6><b>Время работы:</b> {{ executor3.worktime_start }} - {{ executor3.worktime_end }} ({{ executor3.weekends }})</h6></div>{% endif %}
+        {% else %}
+        <h1 class="display-5 fw-bold">Доступ запрещён!</h1>
+        <div class="col-lg-12 mx-auto">
+            <p class="lead mb-3">Оценки подрядчиков доступны только представителем детских садов!</p>
+        </div>{% endif %}{% endblock %}

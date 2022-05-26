@@ -31,22 +31,6 @@ class Executor(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-class ExecutorRank(models.Model):
-    ranks = (
-        ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'),
-        ('10', '10'),
-    )
-
-    executor = models.ForeignKey('Executor', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rank = models.CharField(max_length=3, choices=ranks)
-
-    class Meta:
-        verbose_name = 'Оценка'
-        verbose_name_plural = 'Оценки'
-        unique_together = ('user',)
-
-
 class Ad(models.Model):
     class Meta:
         verbose_name = 'Объявление'
@@ -66,3 +50,22 @@ class Ad(models.Model):
     contact = models.CharField(max_length=300, verbose_name='Контактная информация')
     actual = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class MethodMarks(models.Model):
+    class Meta:
+        verbose_name = 'Экспертная оценка'
+        verbose_name_plural = 'Экспертные оценки'
+
+    mark1 = models.IntegerField(verbose_name='Оценка 1', validators=[MinValueValidator(0), MaxValueValidator(10)])
+    mark2 = models.IntegerField(verbose_name='Оценка 2', validators=[MinValueValidator(0), MaxValueValidator(10)])
+    mark3 = models.IntegerField(verbose_name='Оценка 3', validators=[MinValueValidator(0), MaxValueValidator(10)])
+
+
+class MonkeyIsVoted(models.Model):
+    user = models.CharField(max_length=100)
+    is_voted = models.BooleanField(default=False)
+
+
+class MethodResult(models.Model):
+    result = models.FloatField()
